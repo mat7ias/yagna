@@ -241,6 +241,7 @@ async fn main() -> anyhow::Result<()> {
             gnt::DRIVER_NAME
         }
         Driver::Zksync => {
+            start_dummy_driver().await?;
             start_zksync_driver(&db, requestor_account).await?;
             zksync::DRIVER_NAME
         }
