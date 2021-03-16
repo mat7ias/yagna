@@ -80,7 +80,7 @@ pub async fn save_default_account(data_dir: &Path, drivers: Vec<String>) -> anyh
     let default_accounts: Vec<Account> = drivers
         .into_iter()
         .map(|driver| Account {
-            driver,
+            driver: driver.clone(),
             address: default_node_id.to_string(),
             network: None, // Use default
             token: None,   // Use default

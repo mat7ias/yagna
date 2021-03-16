@@ -38,7 +38,8 @@ mod local {
             .bind_with_processor(get_status)
             .bind_with_processor(get_invoice_stats)
             .bind_with_processor(get_accounts)
-            .bind_with_processor(validate_allocation);
+            .bind_with_processor(validate_allocation)
+            .bind_with_processor(shut_down);
 
         // Initialize counters to 0 value. Otherwise they won't appear on metrics endpoint
         // until first change to value will be made.
@@ -274,6 +275,15 @@ mod local {
             .await
             .validate_allocation(msg.platform, msg.address, msg.amount)
             .await?)
+    }
+
+    async fn shut_down(
+        db: DbExecutor,
+        processor: Arc<Mutex<PaymentProcessor>>,
+        sender: String,
+        msg: ShutDown,
+    ) -> Result<(), GenericError> {
+        unimplemented!() // TODO
     }
 }
 

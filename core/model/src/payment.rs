@@ -23,6 +23,7 @@ pub mod local {
     use chrono::{DateTime, Utc};
     use std::collections::HashMap;
     use std::fmt::Display;
+    use std::time::Duration;
     use structopt::*;
     use strum::{EnumProperty, VariantNames};
     use strum_macros::{Display, EnumProperty, EnumString, EnumVariantNames, IntoStaticStr};
@@ -403,6 +404,23 @@ pub mod local {
         AccountNotRegistered,
         #[error("Error while validating allocation: {0}")]
         Other(String),
+    }
+
+    #[derive(Clone, Debug, Serialize, Deserialize)]
+    pub struct ShutDown {
+        pub timeout: Duration,
+    }
+
+    impl ShutDown {
+        pub fn new(timeout: Duration) -> Self {
+            Self { timeout }
+        }
+    }
+
+    impl RpcMessage for ShutDown {
+        const ID: &'static str = "ShutDown";
+        type Item = ();
+        type Error = GenericError;
     }
 
     /// Experimental. In future releases this might change or be removed.

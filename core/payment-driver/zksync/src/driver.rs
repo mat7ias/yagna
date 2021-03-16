@@ -354,6 +354,15 @@ Mind that to be eligible you have to run your app at least once on testnet -
         );
         Ok(msg.amount <= (account_balance - total_allocated_amount - allocation_surcharge))
     }
+
+    async fn shut_down(
+        &self,
+        _db: DbExecutor,
+        _caller: String,
+        _msg: ShutDown,
+    ) -> Result<(), GenericError> {
+        unimplemented!() // TODO
+    }
 }
 
 #[async_trait(?Send)]

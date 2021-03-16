@@ -10,6 +10,7 @@ use std::{
     env,
     fmt::Debug,
     path::{Path, PathBuf},
+    time::Duration,
 };
 use structopt::{clap, StructOpt};
 use url::Url;
@@ -39,6 +40,7 @@ use autocomplete::CompleteCommand;
 
 lazy_static::lazy_static! {
     static ref DEFAULT_DATA_DIR: String = DataDir::new(clap::crate_name!()).to_string();
+    static ref PAYMENT_SHUTDOWN_TIMEOUT: Duration = Duration::from_secs(10);
 }
 
 #[derive(StructOpt, Debug)]
@@ -408,6 +410,14 @@ impl ServiceCommand {
                 future::try_join(server.run(), sd_notify(false, "READY=1")).await?;
 
                 log::info!("{} service successfully finished!", app_name);
+
+                log::info!("Stopping payment service...");
+                future::select(
+                    tokio::time::timeout(*PAYMENT_SHUTDOWN_TIMEOUT),
+                    actix_rt::signal::ctrl_c().boxed(),
+                )
+                .await;
+                log::info!("Payment service stopped.");
                 logger_handle.shutdown();
                 Ok(CommandOutput::NoOutput)
             }
