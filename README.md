@@ -72,7 +72,7 @@ Other ExeUnit types are to come: Docker on Linux and SGX on Graphene.
 
 ## MVP
 
-With the MVP out, in the form of the Beta I ((Grace Hopper)[https://github.com/golemfactory/yagna/releases/tag/v0.6.1]) release. The release includes:
+With the MVP out, in the form of the Beta I ([Grace Hopper](https://github.com/golemfactory/yagna/releases/tag/v0.6.1)) release. The release includes:
 * Clean and easy UX, most specifically during onboarding.
 * GLM-centric.
 * Production-ready, modular and easy to maintain architecture and code base.  
